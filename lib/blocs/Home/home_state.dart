@@ -1,6 +1,6 @@
 part of 'home_bloc.dart';
 
-abstract class HomeState extends Equatable {
+class HomeState extends AppState {
   const HomeState();
   
   @override

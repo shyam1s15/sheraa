@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "234627670256",
+    "project_id": "sheraa-95d17",
+    "storage_bucket": "sheraa-95d17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234627670256:android:fa6df54f086cbf23256235",
+        "android_client_info": {
+          "package_name": "com.shyam.sheraa.sheraa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234627670256-d54ia6d8e3p1vgfmmh3f90e9g9iulom2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOkJjJBiUGWqx_xNOeD_lHhWNr7APyhgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234627670256-d54ia6d8e3p1vgfmmh3f90e9g9iulom2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "234627670256-0mi0c0of00qupvaho8vrc3981k3ndh6q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shyam.sheraa.sheraa.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
