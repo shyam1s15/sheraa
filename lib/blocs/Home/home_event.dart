@@ -1,7 +1,6 @@
 part of 'home_bloc.dart';
 
-
-class HomeEvent extends AppEvent {
+abstract class HomeEvent extends Equatable {
   const HomeEvent();
 }
 

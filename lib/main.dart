@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sheraa/blocs/Home/home_bloc.dart';
+import 'package:sheraa/repositories/category_repository.dart';
 import 'package:sheraa/resources/themes.dart';
 import 'package:sheraa/screens/app_router.dart';
 import 'package:sheraa/screens/home/home_screen.dart';
@@ -17,12 +18,13 @@ Future<void> main() async {
   await Firebase.initializeApp(    
     options: DefaultFirebaseOptions.currentPlatform,
 );
+final categoryRepository = CategoryRepository();
 
   runZonedGuarded<void>(() async {
     runApp(
      MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => HomeBloc()..add(InitialHomeEvent()))
+        BlocProvider(create: (_) => HomeBloc(categoryRepository)..add(InitialHomeEvent()))
       ],
       child: MaterialApp(
         title: 'Sheraa your personal brand',

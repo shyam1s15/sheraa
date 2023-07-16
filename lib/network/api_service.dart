@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-class NetworkBloc<T> {
-  Future<T?> exchangePost(
-      String url, dynamic payload,[T Function(dynamic)? converter]) async {
-    
+class ApiService<T> {
+  Future<T?> exchangePost(String url, dynamic payload,
+      [T Function(dynamic)? converter]) async {
     try {
       final response = await http.post(Uri.parse(url), body: payload);
 
@@ -18,7 +17,8 @@ class NetworkBloc<T> {
           return null;
         }
       } else {
-        throw Exception('Failed Network Bloc: for request $url ::: with status${response.statusCode}');
+        throw Exception(
+            'Failed Network Bloc: for request $url ::: with status${response.statusCode}');
       }
     } catch (error) {
       // Handle the error and show a toast message
@@ -31,7 +31,8 @@ class NetworkBloc<T> {
       );
 
       // Re-throw the error to propagate it to the caller
-      throw error;
+      // throw error;
     }
+    return null;
   }
 }
