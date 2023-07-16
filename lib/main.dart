@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sheraa/blocs/Home/home_bloc.dart';
 import 'package:sheraa/repositories/category_repository.dart';
+import 'package:sheraa/repositories/file_repository.dart';
 import 'package:sheraa/resources/themes.dart';
 import 'package:sheraa/screens/app_router.dart';
 import 'package:sheraa/screens/home/home_screen.dart';
@@ -15,16 +16,18 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(    
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
-final categoryRepository = CategoryRepository();
+  );
+  final categoryRepository = CategoryRepository();
+  final fileRepository = FileRepository();
 
   runZonedGuarded<void>(() async {
-    runApp(
-     MultiBlocProvider(
+    runApp(MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => HomeBloc(categoryRepository)..add(InitialHomeEvent()))
+        BlocProvider(
+            create: (_) =>
+                HomeBloc(categoryRepository, fileRepository)..add(InitialHomeEvent()))
       ],
       child: MaterialApp(
         title: 'Sheraa your personal brand',
@@ -34,6 +37,5 @@ final categoryRepository = CategoryRepository();
         initialRoute: HomeScreen.routeName,
       ),
     ));
-
-  },  (error, stackTrace) => log(error.toString(), stackTrace: stackTrace));
+  }, (error, stackTrace) => log(error.toString(), stackTrace: stackTrace));
 }

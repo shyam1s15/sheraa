@@ -10,15 +10,16 @@ abstract class HomeState extends Equatable {
 class HomeInitial extends HomeState {}
 
 class HomePageLoading extends HomeState {
-  @override
-  List<Object> get props => [];
 }
 
 class HomePageLoaded extends HomeState {
   final CategoriesResponse response;
-  
-  HomePageLoaded(this.response);
+  final String app_logo;
+
+  HomePageLoaded(this.response, this.app_logo);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [
+        response, app_logo
+      ];
 }

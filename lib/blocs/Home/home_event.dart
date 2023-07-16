@@ -5,7 +5,7 @@ abstract class HomeEvent extends Equatable {
 }
 
 class InitialHomeEvent extends HomeEvent {
-
+  const InitialHomeEvent();
   @override
   List<Object> get props => [];
 }

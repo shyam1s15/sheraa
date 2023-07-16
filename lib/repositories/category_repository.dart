@@ -22,19 +22,15 @@ class CategoryRepository {
   //   }
   // }
 
-  void getCategoryStream() async {
+  Future<CategoriesResponse> getCategoryList() async {
     QuerySnapshot querySnapshot = await _collection.get();
     try {
       List<QueryDocumentSnapshot> documents = querySnapshot.docs;
-      print("hiiiiiiiii");
-      print(documents.length);
-      for (var document in documents) {
-        Map<String, dynamic>? data = document.data() as Map<String, dynamic>?;
-        print(data);
-      }
+      return CategoriesResponse.fromDocument(documents);
     } catch (error) {
       print('Failed to retrieve categories: $error');
     }
+    throw Exception("Failed to retrieve categories");
   }
 
   void dispose() {}

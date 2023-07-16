@@ -24,19 +24,40 @@ class HomeScreen extends StatelessWidget {
         title: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            CachedNetworkImage(
-              imageUrl: 'https://example.com/logo.png', // Replace with your image URL
-              width: 24,
-              height: 24,
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
+            BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                if (state is HomePageLoaded) {
+                  // return CachedNetworkImage(
+                  //   imageUrl:
+                  //       state.app_logo, // Replace with your image URL
+                  //   width: 34,
+                  //   height: 34,
+                  //   placeholder: (context, url) => CircularProgressIndicator(),
+                  //   errorWidget: (context, url, error) => Icon(Icons.error),
+                  // );
+                  print(state.app_logo);
+                  return Image.network(state.app_logo, width: 30, height: 30);
+                } else {
+                  return Container();
+                }
+              },
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Sheraa', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),),
-                const Text('Your personal brand', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black)),
+                const Text(
+                  'Sheraa',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+                const Text('Your personal brand',
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black)),
               ],
             ),
             // ListTile(
