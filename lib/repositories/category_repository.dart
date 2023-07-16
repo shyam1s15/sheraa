@@ -24,8 +24,10 @@ class CategoryRepository {
 
   Future<CategoriesResponse> getCategoryList() async {
     QuerySnapshot querySnapshot = await _collection.get();
+    print("Hi");
     try {
       List<QueryDocumentSnapshot> documents = querySnapshot.docs;
+      
       return CategoriesResponse.fromDocument(documents);
     } catch (error) {
       print('Failed to retrieve categories: $error');

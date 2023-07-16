@@ -24,7 +24,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       InitialHomeEvent event, Emitter<HomeState> emit) async {
     emit(HomePageLoading());
     final app_logo = await _fetchAppLogo() ?? "wtf";
-    print(app_logo);
     final categories = await _fetchCachedCategories();
     // final trending_products = await _fetchTrendingProducts();
     emit(HomePageLoaded(categories, app_logo));

@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sheraa/blocs/Home/home_bloc.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:sheraa/resources/themes.dart';
+import 'package:sheraa/screens/home/category_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/';
@@ -27,46 +29,45 @@ class HomeScreen extends StatelessWidget {
             BlocBuilder<HomeBloc, HomeState>(
               builder: (context, state) {
                 if (state is HomePageLoaded) {
-                  // return CachedNetworkImage(
-                  //   imageUrl:
-                  //       state.app_logo, // Replace with your image URL
-                  //   width: 34,
-                  //   height: 34,
-                  //   placeholder: (context, url) => CircularProgressIndicator(),
-                  //   errorWidget: (context, url, error) => Icon(Icons.error),
-                  // );
-                  print(state.app_logo);
-                  return Image.network(state.app_logo, width: 30, height: 30);
+                  return CachedNetworkImage(
+                    imageUrl: state.app_logo, // Replace with your image URL
+                    width: 34,
+                    height: 34,
+                    placeholder: (context, url) => const SizedBox(
+                      width: 34,
+                      height: 34,
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  );
                 } else {
-                  return Container();
+                  return const SizedBox(width: 34, height: 34);
                 }
               },
             ),
-            Column(
+            const SizedBox(
+              width: 10,
+            ),
+            const Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Sheraa',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
-                const Text('Your personal brand',
+                Text('Your personal brand',
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
               ],
             ),
-            // ListTile(
-            //   title: const Text('Sheraa', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-            //   subtitle: const Text('Your personal brand', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-            // ),
           ],
         ),
-        // leading: Icon(),
       ),
       body: SafeArea(
           child: Column(
@@ -77,6 +78,34 @@ class HomeScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  if (state is HomePageLoaded) {
+                    return Expanded(
+                      child: SizedBox(
+                        height: 100,
+                        child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, int index) {
+                              // return CategoryWidget(
+                              //     imageUrl: state
+                              //         .categoryResponse.categories[index].icon,
+                              //     name: state
+                              //         .categoryResponse.categories[index].name);
+                              return Container();
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) =>
+                                    const Divider(),
+                            itemCount:
+                                state.categoryResponse.categories.length),
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
               // BlocBuilder to handle UI updates
               BlocBuilder<HomeBloc, HomeState>(
                 builder: (context, state) {

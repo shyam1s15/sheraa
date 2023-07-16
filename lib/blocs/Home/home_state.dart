@@ -13,13 +13,13 @@ class HomePageLoading extends HomeState {
 }
 
 class HomePageLoaded extends HomeState {
-  final CategoriesResponse response;
+  final CategoriesResponse categoryResponse;
   final String app_logo;
 
-  HomePageLoaded(this.response, this.app_logo);
+  HomePageLoaded(this.categoryResponse, this.app_logo);
 
   @override
   List<Object> get props => [
-        response, app_logo
+        categoryResponse, app_logo
       ];
 }
