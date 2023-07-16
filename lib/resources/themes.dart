@@ -53,3 +53,5 @@ TextTheme textTheme() {
     ),
   );
 }                                                            
+
+const APP_BACKGROUND_COLOR = Colors.white;
