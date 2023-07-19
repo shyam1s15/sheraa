@@ -17,7 +17,7 @@ class Category {
     return Category(
       id: json['id'],
       name: json['name'],
-      icon: json['icon'],
+      icon: json['icon'] ?? '',
       created: json['created_at'],
     );
   }
@@ -36,9 +36,9 @@ class CategoriesResponse {
     return CategoriesResponse(categories: categories);
   }
 
-  factory CategoriesResponse.fromDocument(List<QueryDocumentSnapshot> docs) {
+  factory CategoriesResponse.fromDocument(List<Map<String, dynamic>> docs) {
     final categories = docs
-        .map((d) => Category.fromJson(d.data() as Map<String, dynamic>))
+        .map((d) => Category.fromJson(d))
         .toList();
     return CategoriesResponse(categories: categories);
   }

@@ -71,7 +71,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: SafeArea(
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        // mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
@@ -87,12 +87,23 @@ class HomeScreen extends StatelessWidget {
                         child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
-                              // return CategoryWidget(
-                              //     imageUrl: state
-                              //         .categoryResponse.categories[index].icon,
-                              //     name: state
-                              //         .categoryResponse.categories[index].name);
-                              return Container();
+                              return InkWell(
+                                child: CategoryWidget(
+                                    imageUrl: state.categoryResponse
+                                        .categories[index].icon,
+                                    name: state.categoryResponse
+                                        .categories[index].name),
+                                onTap: () {
+                                  if (state.categoryResponse.categories[index]
+                                          .id ==
+                                      "0") {
+                                        // load all category subcategory page aka menu
+                                  } else {
+                                    // load specific category page
+                                  }
+                                },
+                              );
+                              // return Container();
                             },
                             separatorBuilder:
                                 (BuildContext context, int index) =>
@@ -103,21 +114,6 @@ class HomeScreen extends StatelessWidget {
                     );
                   } else {
                     return Container();
-                  }
-                },
-              ),
-              // BlocBuilder to handle UI updates
-              BlocBuilder<HomeBloc, HomeState>(
-                builder: (context, state) {
-                  if (state is HomeInitial) {
-                    return ElevatedButton(
-                        onPressed: () {
-                          // context.read<HomeBloc>().add(HomeEvent());
-                        },
-                        child: Text("Gallery Photos",
-                            style: Theme.of(context).textTheme.displayMedium));
-                  } else {
-                    return Text("Kam shuru toh kar bhai");
                   }
                 },
               ),
