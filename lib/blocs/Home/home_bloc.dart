@@ -46,5 +46,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     return fileRepository.getAppLogo();
   }
 
+  void navigateToAppMenu(CategoriesResponse categoryResponse) {
+    // BlocProvider.of<CategoryListingBloc>(context).add(LoadAppMenuEvent(state.categoryResponse));
+                                    // Navigator.push(
+                                    //     context,
+                                    //     CatSubcatScreen.route(state.categoryResponse)
+                                    //     );
+  }
+
   // Future<> _fetchTrendingProducts() async {}
 }
