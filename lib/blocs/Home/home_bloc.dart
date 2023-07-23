@@ -8,6 +8,7 @@ import 'package:sheraa/blocs/Home/home_bloc.dart';
 import 'package:sheraa/models/categories_model.dart';
 import 'package:sheraa/repositories/category_repository.dart';
 import 'package:sheraa/repositories/file_repository.dart';
+import 'package:sheraa/services/category_service.dart';
 
 import '../../repositories/subcategory_repository.dart';
 
@@ -17,13 +18,13 @@ part 'home_state.dart';
 final GetIt getIt = GetIt.instance;
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final CategoryRepository categoryRepository = getIt<CategoryRepository>();
+  // final CategoryRepository categoryRepository = getIt<CategoryRepository>();
   final FileRepository fileRepository = getIt<FileRepository>();
-  final SubcategoryRepository subcategoryRepository =
-      getIt<SubcategoryRepository>();
+  // final SubcategoryRepository subcategoryRepository =
+  //     getIt<SubcategoryRepository>();
+  final CategoryService categoryService = getIt<CategoryService>();
 
-  HomeBloc()
-      : super(HomeInitial()) {
+  HomeBloc() : super(HomeInitial()) {
     on<InitialHomeEvent>(_fetchHomePageData);
   }
 
@@ -37,15 +38,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<CategoriesResponse> _fetchCachedCategories() async {
-    subcategoryRepository.getCategoryList();
-    return await categoryRepository.getCategoryList();
-    
+    // return await categoryRepository.getCategoryList();
+    return await categoryService.getAppCategoriesWithSubCategories();
   }
 
   Future<String?> _fetchAppLogo() async {
     return fileRepository.getAppLogo();
   }
-  
 
   // Future<> _fetchTrendingProducts() async {}
 }

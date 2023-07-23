@@ -16,7 +16,7 @@ class HomePageLoaded extends HomeState {
   final CategoriesResponse categoryResponse;
   final String app_logo;
 
-  HomePageLoaded(this.categoryResponse, this.app_logo);
+  const HomePageLoaded(this.categoryResponse, this.app_logo);
 
   @override
   List<Object> get props => [

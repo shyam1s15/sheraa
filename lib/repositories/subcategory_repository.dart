@@ -27,7 +27,7 @@ class SubcategoryRepository {
   //   }
   // }
 
-  Future<ListSubcategory> getCategoryList() async {
+  Future<ListSubcategory> getSubcategories() async {
     QuerySnapshot querySnapshot = await _collection.get();
     try {
       List<QueryDocumentSnapshot> documents = querySnapshot.docs;
