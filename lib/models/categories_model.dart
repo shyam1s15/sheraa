@@ -1,11 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'categories_model.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Category {
-  final String id;
-  final String name;
-  final String icon;
-  final Timestamp created;
+  @JsonKey(name: 'id')
+  String id;
+  
+  @JsonKey(name: 'name')
+  String name;
 
+  @JsonKey(name: 'icon')
+  String icon;
+
+  @TimestampConverter()
+  @JsonKey(name: 'created_at')
+  final DateTime created;
+  
   Category({
     required this.id,
     required this.name,
@@ -13,14 +25,8 @@ class Category {
     required this.created
   });
 
-  factory Category.fromJson(Map<String, dynamic> json) {
-    return Category(
-      id: json['id'],
-      name: json['name'],
-      icon: json['icon'] ?? '',
-      created: json['created_at'],
-    );
-  }
+  factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
+  Map<String, dynamic> toJson() => _$CategoryToJson(this);
 }
 
 class CategoriesResponse {
@@ -43,4 +49,16 @@ class CategoriesResponse {
     return CategoriesResponse(categories: categories);
   }
 
+}
+
+class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
+  const TimestampConverter();
+
+  @override
+  DateTime fromJson(Timestamp timestamp) {
+    return timestamp.toDate();
+  }
+
+  @override
+  Timestamp toJson(DateTime date) => Timestamp.fromDate(date);
 }

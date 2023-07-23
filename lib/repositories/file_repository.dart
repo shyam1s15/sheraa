@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 
+@singleton
 class FileRepository {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 

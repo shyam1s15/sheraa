@@ -1,21 +1,17 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
-import 'package:sheraa/models/categories_model.dart';
-import 'package:sheraa/repositories/subcategory_repository.dart';
+import 'package:sheraa/models/sub_category_model.dart';
 
 import 'file_repository.dart';
 
 final GetIt getIt = GetIt.instance;
 
 @singleton
-class CategoryRepository {
+class SubcategoryRepository {
   // final http.Client httpClient;
   final CollectionReference _collection =
-      FirebaseFirestore.instance.collection('categories');
+      FirebaseFirestore.instance.collection('subcategories');
   final FileRepository fileRepository = getIt<FileRepository>();
 
   // CategoryRepository({required this.httpClient});
@@ -31,13 +27,14 @@ class CategoryRepository {
   //   }
   // }
 
-  Future<CategoriesResponse> getCategoryList() async {
+  Future<ListSubcategory> getCategoryList() async {
     QuerySnapshot querySnapshot = await _collection.get();
     try {
       List<QueryDocumentSnapshot> documents = querySnapshot.docs;
       List<Map<String, dynamic>> docs =
           await fileRepository.updateLocationToUrls(documents);
-      return CategoriesResponse.fromDocument(docs);
+      return ListSubcategory.fromDocument(docs);
+      // print(docs);
     } catch (error) {
       print('Failed to retrieve categories: $error');
     }

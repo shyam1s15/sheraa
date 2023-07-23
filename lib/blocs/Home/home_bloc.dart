@@ -9,6 +9,8 @@ import 'package:sheraa/models/categories_model.dart';
 import 'package:sheraa/repositories/category_repository.dart';
 import 'package:sheraa/repositories/file_repository.dart';
 
+import '../../repositories/subcategory_repository.dart';
+
 part 'home_event.dart';
 part 'home_state.dart';
 
@@ -17,6 +19,8 @@ final GetIt getIt = GetIt.instance;
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final CategoryRepository categoryRepository = getIt<CategoryRepository>();
   final FileRepository fileRepository = getIt<FileRepository>();
+  final SubcategoryRepository subcategoryRepository =
+      getIt<SubcategoryRepository>();
 
   HomeBloc()
       : super(HomeInitial()) {
@@ -33,7 +37,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<CategoriesResponse> _fetchCachedCategories() async {
+    subcategoryRepository.getCategoryList();
     return await categoryRepository.getCategoryList();
+    
   }
 
   Future<String?> _fetchAppLogo() async {
