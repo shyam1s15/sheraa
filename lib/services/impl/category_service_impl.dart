@@ -17,23 +17,24 @@ class CategoryServiceImpl implements CategoryService {
   @override
   Future<CategoriesResponse> getAppCategoriesWithSubCategories() async {
     CategoriesResponse catResponse = await categoryRepository.getCategoryList();
-    
+
     Map<String, Category> resp = Map();
     if (CollectionUtil.nonNullNonEmpty(catResponse.categories)) {
       // catResponse.categories.map((cat) => resp.putIfAbsent(cat.id, () => cat));
-      catResponse.categories.forEach((cat) => resp.putIfAbsent(cat.id, () => cat));
+      catResponse.categories
+          .forEach((cat) => resp.putIfAbsent(cat.id, () => cat));
     }
     ListSubcategory subcategories =
         await subcategoryRepository.getSubcategories();
 
     if (CollectionUtil.nonNullNonEmpty(subcategories.subcategories)) {
       for (var s in subcategories.subcategories) {
-        if (resp.containsKey(s.id)) {
-          resp[s.id]!.subcategory = s;
+        if (resp.containsKey(s.category)) {
+          resp[s.category]!.subcategories?.subcategories.add(s);
         }
       }
     }
-    
+
     catResponse.categories = resp.values.toList();
     return catResponse;
   }

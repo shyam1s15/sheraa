@@ -18,7 +18,6 @@ class CategoryListingBloc
 
   FutureOr<void> _loadAppMenu(
       LoadAppMenuEvent event, Emitter<CategoryListingBlocState> emit) {
-    print("objects loaded");
     emit(CategoryListingBlocMenuLoaded(event.response));
   }
 }

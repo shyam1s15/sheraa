@@ -22,7 +22,8 @@ class Category {
   @JsonKey(name: 'created_at')
   final DateTime created;
 
-  Subcategory? subcategory;
+  @JsonKey(includeFromJson: false) // Set the ignore property to true
+  ListSubcategory? subcategories;
 
   Category(
       {required this.id,

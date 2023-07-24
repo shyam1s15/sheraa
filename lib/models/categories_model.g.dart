@@ -13,9 +13,7 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
       created:
           const TimestampConverter().fromJson(json['created_at'] as Timestamp),
       backgroundColor: json['bg_color'] as String,
-    )..subcategory = json['subcategory'] == null
-        ? null
-        : Subcategory.fromJson(json['subcategory'] as Map<String, dynamic>);
+    );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
       'id': instance.id,
@@ -23,5 +21,4 @@ Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
       'icon': instance.icon,
       'bg_color': instance.backgroundColor,
       'created_at': const TimestampConverter().toJson(instance.created),
-      'subcategory': instance.subcategory?.toJson(),
     };
