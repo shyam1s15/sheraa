@@ -30,7 +30,12 @@ class CategoryServiceImpl implements CategoryService {
     if (CollectionUtil.nonNullNonEmpty(subcategories.subcategories)) {
       for (var s in subcategories.subcategories) {
         if (resp.containsKey(s.category)) {
-          resp[s.category]!.subcategories?.subcategories.add(s);
+          if (resp[s.category]!.subcategories == null) {
+            resp[s.category]!.subcategories =
+                ListSubcategory(subcategories: [s]);
+          } else {
+            resp[s.category]!.subcategories?.subcategories.add(s);
+          }
         }
       }
     }

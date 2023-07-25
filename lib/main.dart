@@ -29,14 +29,15 @@ final getIt = GetIt.instance;
 void configureDependencies() => getIt.init();
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  // setupLocator();
-  configureDependencies();
-
+  
   runZonedGuarded<void>(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    // setupLocator();
+    configureDependencies();
+
     runApp(MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => HomeBloc()..add(InitialHomeEvent())),

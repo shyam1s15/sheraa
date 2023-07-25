@@ -7,6 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:sheraa/blocs/category_listing_bloc/bloc/category_listing_bloc_bloc.dart';
 import 'package:sheraa/resources/themes.dart';
 import 'package:sheraa/screens/all_cat_subcat_menu/cat_subcat_screen.dart';
+import 'package:sheraa/screens/app_router.dart';
 import 'package:sheraa/screens/home/category_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -109,10 +110,10 @@ class HomeScreen extends StatelessWidget {
                                     // context
                                     //     .read<HomeBloc>()
                                     //     .navigateToAppMenu(state.categoryResponse);
-                                    Navigator.push(
+                                    Navigator.pushNamed(
                                         context,
-                                        CatSubcatScreen.route(state.categoryResponse)
-                                        );
+                                        CatSubcatScreen.routeName,
+                                        arguments: state.categoryResponse);
                                   } else {
                                     // load specific category page
                                     context.read<CategoryListingBloc>().add(
