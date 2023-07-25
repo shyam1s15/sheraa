@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sheraa/blocs/Home/home_bloc.dart';
+import 'package:sheraa/blocs/category_listing_bloc/bloc/category_listing_bloc_bloc.dart';
 import 'package:sheraa/main.config.dart';
 // import 'package:sheraa/repositories/category_repository.dart';
 // import 'package:sheraa/repositories/file_repository.dart';
@@ -38,7 +39,8 @@ Future<void> main() async {
   runZonedGuarded<void>(() async {
     runApp(MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => HomeBloc()..add(InitialHomeEvent()))
+        BlocProvider(create: (_) => HomeBloc()..add(InitialHomeEvent())),
+        BlocProvider(create: (_) => CategoryListingBloc()..add(CategoryAppPageInitialEvent())),
       ],
       child: MaterialApp(
         title: 'Sheraa your personal brand',

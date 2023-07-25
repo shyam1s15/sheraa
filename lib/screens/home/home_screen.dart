@@ -4,7 +4,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sheraa/blocs/Home/home_bloc.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:sheraa/blocs/category_listing_bloc/bloc/category_listing_bloc_bloc.dart';
 import 'package:sheraa/resources/themes.dart';
+import 'package:sheraa/screens/all_cat_subcat_menu/cat_subcat_screen.dart';
 import 'package:sheraa/screens/home/category_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -97,10 +99,27 @@ class HomeScreen extends StatelessWidget {
                                   if (state.categoryResponse.categories[index]
                                           .id ==
                                       "0") {
-                                        // load all category subcategory page aka menu
-                                        
+                                    // load all category subcategory page aka menu
+                                    // context.read<CategoryListingBloc>().add(
+                                    //     LoadAppMenuEvent(
+                                    //         state.categoryResponse));
+                                    // Navigator.of(context).push(route)
+                                    // CategoryListingBloc()
+                                    //   ..add(CategoryListingBlocInitial());
+                                    // context
+                                    //     .read<HomeBloc>()
+                                    //     .navigateToAppMenu(state.categoryResponse);
+                                    Navigator.push(
+                                        context,
+                                        CatSubcatScreen.route(state.categoryResponse)
+                                        );
                                   } else {
                                     // load specific category page
+                                    context.read<CategoryListingBloc>().add(
+                                        LoadCategoryListingPage(
+                                            state.categoryResponse,
+                                            state.categoryResponse
+                                                .categories[index].id));
                                   }
                                 },
                               );

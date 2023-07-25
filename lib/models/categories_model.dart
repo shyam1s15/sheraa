@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:sheraa/models/sub_category_model.dart';
 
 part 'categories_model.g.dart';
 
@@ -7,30 +8,37 @@ part 'categories_model.g.dart';
 class Category {
   @JsonKey(name: 'id')
   String id;
-  
+
   @JsonKey(name: 'name')
   String name;
 
   @JsonKey(name: 'icon')
   String icon;
 
+  @JsonKey(name: 'bg_color')
+  String backgroundColor;
+
   @TimestampConverter()
   @JsonKey(name: 'created_at')
   final DateTime created;
-  
-  Category({
-    required this.id,
-    required this.name,
-    required this.icon,
-    required this.created
-  });
 
-  factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
+  @JsonKey(includeFromJson: false) // Set the ignore property to true
+  ListSubcategory? subcategories;
+
+  Category(
+      {required this.id,
+      required this.name,
+      required this.icon,
+      required this.created,
+      required this.backgroundColor});
+
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      _$CategoryFromJson(json);
   Map<String, dynamic> toJson() => _$CategoryToJson(this);
 }
 
 class CategoriesResponse {
-  final List<Category> categories;
+  List<Category> categories;
 
   CategoriesResponse({required this.categories});
 
@@ -43,12 +51,9 @@ class CategoriesResponse {
   }
 
   factory CategoriesResponse.fromDocument(List<Map<String, dynamic>> docs) {
-    final categories = docs
-        .map((d) => Category.fromJson(d))
-        .toList();
+    final categories = docs.map((d) => Category.fromJson(d)).toList();
     return CategoriesResponse(categories: categories);
   }
-
 }
 
 class TimestampConverter implements JsonConverter<DateTime, Timestamp> {

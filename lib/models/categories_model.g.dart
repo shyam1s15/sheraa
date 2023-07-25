@@ -12,11 +12,13 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
       icon: json['icon'] as String,
       created:
           const TimestampConverter().fromJson(json['created_at'] as Timestamp),
+      backgroundColor: json['bg_color'] as String,
     );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'icon': instance.icon,
+      'bg_color': instance.backgroundColor,
       'created_at': const TimestampConverter().toJson(instance.created),
     };

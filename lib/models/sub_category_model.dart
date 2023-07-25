@@ -66,7 +66,6 @@ class ListSubcategory {
   factory ListSubcategory.fromDocument(List<Map<String, dynamic>> docs) {
     final subcategories = docs.map((d) {
       final s = Subcategory.fromJson(d);
-      print(s.toJson());
       return s;
     }).toList();
     return ListSubcategory(subcategories: subcategories);
