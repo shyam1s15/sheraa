@@ -11,13 +11,13 @@ class CategoryListingBloc
     extends Bloc<CategoryListingBlocEvent, CategoryListingBlocState> {
   CategoryListingBloc() : super(CategoryListingBlocInitial()) {
     on<CategoryListingBlocEvent>((event, emit) {
-      // TODO: implement event handler
     });
     on<LoadAppMenuEvent>(_loadAppMenu);
   }
 
   FutureOr<void> _loadAppMenu(
       LoadAppMenuEvent event, Emitter<CategoryListingBlocState> emit) {
+        // TODO: load data directly from db if not present
     emit(CategoryListingBlocMenuLoaded(event.response));
   }
 }

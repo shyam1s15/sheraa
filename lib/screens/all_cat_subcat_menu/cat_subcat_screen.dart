@@ -84,62 +84,77 @@ class _CatSubcatScreenState extends State<CatSubcatScreen> {
 
 class CategoryListingWidget extends StatelessWidget {
   final CategoryListingBlocMenuLoaded state;
-  const CategoryListingWidget({
-    super.key,
-    required this.state
-  });
+  const CategoryListingWidget({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
         itemBuilder: (context, index) {
           if (index > 0) {
-            return Container(
-              height: 150,
-              color: HexColor.fromHex(
-                  state.response.categories[index].backgroundColor),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Padding(
-                      padding: EdgeInsets.all(25),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppTextDisplayMedium(
-                              text: state.response.categories[index].name),
-                          // if (state.response.categories[index].subcategory)
-                          AppTextDisplaySmall(text: state.response.categories[index].subcategories?.subcategories.map((sc) => sc.name).toList().join(", ") ?? "")
-                        ],
-                      ),
+            return Column(
+              children: [
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    height: 150,
+                    color: HexColor.fromHex(
+                        state.response.categories[index].backgroundColor),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Padding(
+                            padding: EdgeInsets.all(25),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AppTextDisplayMedium(
+                                    text:
+                                        state.response.categories[index].name),
+                                // if (state.response.categories[index].subcategory)
+                                AppTextMedium(
+                                    text: state.response.categories[index]
+                                            .subcategories?.subcategories
+                                            .map((sc) => sc.name)
+                                            .toList()
+                                            .join(", ") ??
+                                        "")
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: CachedNetworkImage(
+                            imageUrl: state.response.categories[index]
+                                .icon, // Replace with your image URL
+                            width: 100,
+                            height: double
+                                .infinity, // Set the height to double.infinity to take the available height
+
+                            fit: BoxFit.cover,
+                            // height: 100,
+                            placeholder: (context, url) => const SizedBox(
+                              width: 100,
+                              height: double
+                                  .infinity, // Set the height to double.infinity to take the available height
+
+                              // height: 100,
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: CachedNetworkImage(
-                      imageUrl: state.response.categories[index]
-                          .icon, // Replace with your image URL
-                      width: 100,
-                      height: double
-                          .infinity, // Set the height to double.infinity to take the available height
+                ),
+                // state.response.categories[index].subcategories != null ?
+                // Container(
 
-                      fit: BoxFit.cover,
-                      // height: 100,
-                      placeholder: (context, url) => const SizedBox(
-                        width: 100,
-                        height: double
-                            .infinity, // Set the height to double.infinity to take the available height
-
-                        // height: 100,
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-                  ),
-                ],
-              ),
+                // ) : Container()
+              ],
             );
           }
           return Container();
