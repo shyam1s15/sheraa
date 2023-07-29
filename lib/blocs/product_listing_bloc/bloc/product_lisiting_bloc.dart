@@ -20,6 +20,10 @@ class ProductLisitingBloc
   }
 
   FutureOr<void> _loadCatSubCatFilteredProducts(LoadProductListingEvent event, Emitter<ProductLisitingState> emit) {
-    
+    try {
+
+    } catch (e) {
+      emit(ProductListingErrorState(e.toString()));
+    }
   }
 }

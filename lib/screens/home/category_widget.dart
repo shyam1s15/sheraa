@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:sheraa/utils/custom_text.dart';
+import 'package:sheraa/resources/commons/app_text.dart';
 
 class CategoryWidget extends StatelessWidget {
   final String imageUrl;
@@ -24,7 +24,7 @@ class CategoryWidget extends StatelessWidget {
             backgroundImage: CachedNetworkImageProvider(imageUrl),
           ),
           const SizedBox(height: 5,),
-          CustomNormalAppText(text: name)
+          AppTextDisplaySmall(text: name)
         ],
       ),
     );

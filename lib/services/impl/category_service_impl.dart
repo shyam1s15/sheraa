@@ -1,3 +1,4 @@
+import 'package:basic_utils/basic_utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sheraa/models/categories_model.dart';
@@ -5,11 +6,12 @@ import 'package:sheraa/models/sub_category_model.dart';
 import 'package:sheraa/repositories/category_repository.dart';
 import 'package:sheraa/repositories/subcategory_repository.dart';
 import 'package:sheraa/services/category_service.dart';
+import 'package:sheraa/services/product_service.dart';
 import 'package:sheraa/utils/collection_utils.dart';
 
 final GetIt getIt = GetIt.instance;
 
-@Singleton(as: CategoryService)
+@Injectable(as: CategoryService)
 class CategoryServiceImpl implements CategoryService {
   CategoryRepository categoryRepository = getIt<CategoryRepository>();
   SubcategoryRepository subcategoryRepository = getIt<SubcategoryRepository>();
@@ -42,5 +44,20 @@ class CategoryServiceImpl implements CategoryService {
 
     catResponse.categories = resp.values.toList();
     return catResponse;
+  }
+
+  @override
+  Future<Category?> getSelectedCategoryWithSubCategory(String categoryId) async {
+    if (StringUtils.isNullOrEmpty(categoryId) || categoryId == "0") {
+      return null;
+    }
+    Category cat = await categoryRepository.findByCategoryId(categoryId);
+    ListSubcategory? subcategories = await subcategoryRepository.findByCategory(categoryId);
+
+    if (subcategories != null && CollectionUtil.nonNullNonEmpty(subcategories.subcategories)) {
+      cat.subcategories = subcategories;
+    }
+
+    return cat;
   }
 }

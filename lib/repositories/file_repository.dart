@@ -5,7 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 
-@singleton
+@Injectable()
 class FileRepository {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -62,5 +62,11 @@ class FileRepository {
       resp.add(d);
     }
     return resp;
+  }
+  
+  Future<Map<String, dynamic>> updateLocationToUrl(QueryDocumentSnapshot doc) async {
+    var d = doc.data() as Map<String, dynamic>;
+    d['icon'] = await getImageUrl(d['icon']);
+    return d;
   }
 }

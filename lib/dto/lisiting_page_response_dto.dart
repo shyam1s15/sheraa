@@ -3,7 +3,7 @@ import 'package:sheraa/models/categories_model.dart';
 
 class ListingPageResponseDto {
   Category category;
-  List<ProductsDto> products;
+  List<ProductsDto>? products;
 
   ListingPageResponseDto({required this.category, required this.products});
 }

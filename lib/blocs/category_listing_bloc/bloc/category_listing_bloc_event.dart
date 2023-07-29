@@ -24,13 +24,11 @@ class LoadAppMenuEvent extends CategoryListingBlocEvent {
 }
 
 class LoadCategoryListingPage extends CategoryListingBlocEvent {
-  final CategoriesResponse response;
   final String selectedCategory;
-  final String selectedSubcategory = "0";
+  final String selectedSubcategory;
 
-  const LoadCategoryListingPage(
-    this.response, this.selectedCategory);
+  const LoadCategoryListingPage(this.selectedCategory, this.selectedSubcategory);
 
   @override
-  List<Object> get props => [response, selectedCategory, selectedSubcategory];
+  List<Object> get props => [selectedCategory, selectedSubcategory];
 }
