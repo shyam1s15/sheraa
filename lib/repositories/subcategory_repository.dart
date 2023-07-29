@@ -7,7 +7,7 @@ import 'file_repository.dart';
 
 final GetIt getIt = GetIt.instance;
 
-@singleton
+@Injectable()
 class SubcategoryRepository {
   // final http.Client httpClient;
   final CollectionReference _collection =
@@ -39,5 +39,16 @@ class SubcategoryRepository {
       print('Failed to retrieve categories: $error');
     }
     throw Exception("Failed to retrieve categories");
+  }
+
+  Future<ListSubcategory?> findByCategory(String categoryId) async {
+    QuerySnapshot querySnapshot = await _collection.where("category_id", isEqualTo: categoryId).get();
+    if (querySnapshot.docs.isEmpty) {
+      return null;
+    }
+    List<QueryDocumentSnapshot> documents = querySnapshot.docs;
+    List<Map<String, dynamic>> docs =
+    await fileRepository.updateLocationToUrls(documents);
+    return ListSubcategory.fromDocument(docs);
   }
 }

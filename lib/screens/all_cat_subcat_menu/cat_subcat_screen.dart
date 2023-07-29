@@ -71,9 +71,11 @@ class _CatSubcatScreenState extends State<CatSubcatScreen> {
             return const CircularProgressIndicator();
           } else if (state is CategoryListingBlocMenuLoaded) {
             return CategoryListingWidget(state: state);
-          } else if (state is SelectedCategoryListing) {
-            throw UnimplementedError();
-          } else {
+          }
+          // else if (state is SelectedCategoryListing) {
+          //   throw UnimplementedError();
+          // }
+          else {
             throw UnimplementedError();
           }
         },

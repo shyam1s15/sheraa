@@ -17,3 +17,11 @@ class ProductListingLoaded extends ProductLisitingState {
   @override
   List<Object> get props => [category];
 }
+
+class ProductListingErrorState extends ProductLisitingState {
+  final String errorMessage;
+  ProductListingErrorState(this.errorMessage);
+
+  @override
+  List<Object> get props => [errorMessage];
+}

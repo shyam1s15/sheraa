@@ -20,12 +20,30 @@ class CategoryListingBlocMenuLoaded extends CategoryListingBlocState {
   List<Object> get props => [response, selectedCategory, selectedSubcategory];
 }
 
-class SelectedCategoryListing extends CategoryListingBlocState {
-  final CategoriesResponse response;
-  final String selectedCategory;
-  final String selectedSubcategory;
+// class SelectedCategoryListing extends CategoryListingBlocState {
+//   final CategoriesResponse response;
+//   final String selectedCategory;
+//   final String selectedSubcategory;
+//
+//   const SelectedCategoryListing(this.response, this.selectedCategory, this.selectedSubcategory);
+//   @override
+//   List<Object> get props => [response, selectedCategory, selectedSubcategory];
+// }
 
-  const SelectedCategoryListing(this.response, this.selectedCategory, this.selectedSubcategory);
+class ProductLoadedState extends CategoryListingBlocState {
+  final ListingPageResponseDto productResponseDto;
+  final String app_logo;
+
+  ProductLoadedState(this.productResponseDto, this.app_logo);
+
   @override
-  List<Object> get props => [response, selectedCategory, selectedSubcategory];
+  List<Object> get props => [productResponseDto, app_logo];
+}
+
+class ErrorState extends CategoryListingBlocState {
+  final String message;
+  ErrorState(this.message);
+
+  @override
+  List<Object> get props => [message];
 }
