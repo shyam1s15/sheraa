@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
@@ -15,46 +16,55 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(
-            imageUrl,
-            width: double.infinity,
-            height: 150,
-            fit: BoxFit.cover,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              name,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+    return SizedBox(
+      height: 220,
+      width: double.infinity,
+      child: Card(
+        elevation: 4,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+            CachedNetworkImage(
+            imageUrl: imageUrl,
+            width: 120,
+            height: 120,
+            placeholder: (context, url) => const SizedBox(
+              width: 120,
+              height: 120,
             ),
+            errorWidget: (context, url, error) =>
+            const Icon(Icons.error),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Price: \$${price}',
-              style: TextStyle(
-                fontSize: 14,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(
+                      name,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Price: \$${price}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      'Discount: \$${discountAmount.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Discount: \$${discountAmount.toStringAsFixed(2)}',
-              style: TextStyle(
-                fontSize: 14,
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
