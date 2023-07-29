@@ -39,6 +39,11 @@ class _CatSubcatScreenState extends State<CatSubcatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of<CategoryListingBloc>(context);
+
+    // Fire the event with the data
+    bloc.add(CategoryAppPageInitialEvent());
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: APP_BACKGROUND_COLOR,
@@ -68,7 +73,8 @@ class _CatSubcatScreenState extends State<CatSubcatScreen> {
             context
                 .read<CategoryListingBloc>()
                 .add(LoadAppMenuEvent(widget.response));
-            return const CircularProgressIndicator();
+            // return const CircularProgressIndicator();
+            return Container();
           } else if (state is CategoryListingBlocMenuLoaded) {
             return CategoryListingWidget(state: state);
           }
@@ -76,7 +82,12 @@ class _CatSubcatScreenState extends State<CatSubcatScreen> {
           //   throw UnimplementedError();
           // }
           else {
-            throw UnimplementedError();
+            // print(state.toString());
+            context
+                .read<CategoryListingBloc>()
+                .add(LoadAppMenuEvent(widget.response));
+            // throw UnimplementedError();
+            return Container();
           }
         },
       )),

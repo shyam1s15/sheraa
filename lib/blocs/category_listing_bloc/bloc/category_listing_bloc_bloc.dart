@@ -30,9 +30,10 @@ class CategoryListingBloc
   }
 
   FutureOr<void> _loadAppMenu(
-      LoadAppMenuEvent event, Emitter<CategoryListingBlocState> emit) {
+      LoadAppMenuEvent event, Emitter<CategoryListingBlocState> emit) async {
         // TODO: load data directly from db if not present
-    emit(CategoryListingBlocMenuLoaded(event.response));
+    CategoriesResponse response = await categoryService.getAppCategoriesWithSubCategories();
+    emit(CategoryListingBlocMenuLoaded(response));
   }
 
   FutureOr<void> _loadCategorySubcategoryProductListingPage(LoadCategoryListingPage event, Emitter<CategoryListingBlocState> emit) async {
