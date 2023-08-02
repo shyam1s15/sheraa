@@ -40,6 +40,8 @@ class ProductLoadedState extends CategoryListingBlocState {
   List<Object> get props => [productResponseDto, app_logo];
 }
 
+class ProductPageLoadingState extends CategoryListingBlocState {}
+
 class ErrorState extends CategoryListingBlocState {
   final String message;
   ErrorState(this.message);

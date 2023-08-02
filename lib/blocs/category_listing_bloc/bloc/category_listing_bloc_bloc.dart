@@ -37,6 +37,7 @@ class CategoryListingBloc
   }
 
   FutureOr<void> _loadCategorySubcategoryProductListingPage(LoadCategoryListingPage event, Emitter<CategoryListingBlocState> emit) async {
+    emit(ProductPageLoadingState());
     try {
       ListingPageResponseDto? resp = await productService.getProductList(
           ListingPageRequestDto(

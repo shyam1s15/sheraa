@@ -2,9 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sheraa/blocs/Home/home_bloc.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:sheraa/blocs/category_listing_bloc/bloc/category_listing_bloc_bloc.dart';
 import 'package:sheraa/dto/conversions/request.dart';
 import 'package:sheraa/resources/themes.dart';
 import 'package:sheraa/screens/all_cat_subcat_menu/cat_subcat_screen.dart';
@@ -103,18 +102,21 @@ class HomeScreen extends StatelessWidget {
                                           .id ==
                                       "0") {
                                     // load all category subcategory page aka menu
-                                    Navigator.pushNamed(
-                                        context, CatSubcatScreen.routeName,
-                                        arguments: state.categoryResponse);
+                                    // Navigator.pushNamed(
+                                    //     context, CatSubcatScreen.routeName,
+                                    //     arguments: state.categoryResponse);
+                                    context.push(CatSubcatScreen.routeName, extra: state.categoryResponse, );
                                   } else {
                                     // load specific category page
-                                    Navigator.pushNamed(
-                                        context, ProductListingPage.routeName,
-                                        arguments: CustomConverter
-                                            .convert_cat_subcat_to_dto(
-                                                state.categoryResponse
-                                                    .categories[index].id,
-                                                null));
+                                    // Navigator.pushNamed(
+                                    //     context, ProductListingPage.routeName,
+                                    //     arguments: CustomConverter
+                                    //         .convert_cat_subcat_to_dto(
+                                    //             state.categoryResponse
+                                    //                 .categories[index].id,
+                                    //             null));
+                                    context.push(ProductListingPage.routeName,
+                                        extra: CustomConverter.convert_cat_subcat_to_dto(state.categoryResponse.categories[index].id, null));
                                   }
                                 },
                               );
