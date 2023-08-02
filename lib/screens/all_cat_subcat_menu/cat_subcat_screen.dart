@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sheraa/blocs/category_listing_bloc/bloc/category_listing_bloc_bloc.dart';
 import 'package:sheraa/resources/commons/app_text.dart';
 import 'package:sheraa/resources/extensions/hex_color.dart';
@@ -54,7 +55,8 @@ class _CatSubcatScreenState extends State<CatSubcatScreen> {
             color: Colors.black,
           ),
           onPressed: () {
-            Navigator.pop(context);
+            // Navigator.pop(context);
+            context.pop();
           },
         ),
         title: const Row(

@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sheraa/dto/listing_page_request_dto.dart';
 import 'package:sheraa/resources/commons/app_text.dart';
+import 'package:sheraa/screens/app_router.dart';
+import 'package:sheraa/screens/product_detail_page/product_detail_page.dart';
 import 'package:sheraa/screens/product_listing/product_card.dart';
 
 import '../../blocs/category_listing_bloc/bloc/category_listing_bloc_bloc.dart';
@@ -98,7 +101,8 @@ class ProductListingPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         IconButton(
-                            onPressed: () => Navigator.pop(context),
+                            // onPressed: () => Navigator.pop(context),
+                            onPressed: () => context.pop(),
                             icon: const Icon(Icons.arrow_back_ios_rounded)),
                         CachedNetworkImage(
                           imageUrl: state.productResponseDto.category
@@ -130,15 +134,19 @@ class ProductListingPage extends StatelessWidget {
                             ),
                             itemCount: state.productResponseDto.products!.length, // Number of items in the grid
                             itemBuilder: (context, index) {
-                              return ProductCard(
-                                name: state
-                                    .productResponseDto.products![index].name,
-                                imageUrl: state
-                                    .productResponseDto.products![index].icon,
-                                price: state
-                                    .productResponseDto.products![index].price,
-                                discountAmount: state.productResponseDto
-                                    .products![index].discount,
+                              return InkWell(
+                                //onTap: () => Navigator.pushNamed(context, ProductDetailPage.routeName, arguments: {'id': state.productResponseDto.products![index].id}),
+                                onTap: () => context.pushNamed(ProductDetailPage.routeName, pathParameters: {"id": state.productResponseDto.products![index].id}),
+                                child: ProductCard(
+                                  name: state
+                                      .productResponseDto.products![index].name,
+                                  imageUrl: state
+                                      .productResponseDto.products![index].icon,
+                                  price: state
+                                      .productResponseDto.products![index].price,
+                                  discountAmount: state.productResponseDto
+                                      .products![index].discount,
+                                ),
                               );
                             },
                           ),
