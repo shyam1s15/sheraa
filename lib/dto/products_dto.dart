@@ -5,7 +5,7 @@ part 'products_dto.g.dart';
 @JsonSerializable(explicitToJson: true)
 class ProductsDto {
   final String id;
-  final String icon;
+  String icon;
   final String name;
   final int discount;
   final int price;
@@ -17,7 +17,7 @@ class ProductsDto {
   final String? subCategoryId;
 
   @JsonKey(name: 'images')
-  final List<String>? images;
+  List<String>? images;
 
   @JsonKey(name: 'about')
   final String? about;
