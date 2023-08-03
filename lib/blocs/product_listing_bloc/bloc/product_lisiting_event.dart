@@ -7,6 +7,11 @@ abstract class ProductLisitingEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class ProductListingInitialEvent extends ProductLisitingEvent {
+  @override
+  List<Object> get props => [];
+}
+
 class LoadProductListingEvent extends ProductLisitingEvent {
   final ListingPageRequestDto requestDto;
 

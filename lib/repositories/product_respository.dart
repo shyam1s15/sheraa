@@ -30,4 +30,17 @@ class ProductRepository {
       }).toList();
     }
   }
+
+  Future<ProductsDto?> findById(String id) async {
+    Query<Map<String, dynamic>> query = _firebaseCollection;
+    query = query.where('id', isEqualTo: id);
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await query.get();
+    QueryDocumentSnapshot doc = querySnapshot.docs.first;
+    ProductsDto product = ProductsDto.fromJson(doc.data() as Map<String, dynamic>);
+    product.icon = await fileRepository.getImageUrl(product.icon);
+    if (CollectionUtil.nonNullNonEmpty(product.images)) {
+      product.images = await fileRepository.getImageUrls(product.images!);
+    }
+    return product;
+  }
 }

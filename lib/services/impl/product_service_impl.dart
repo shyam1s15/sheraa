@@ -28,4 +28,12 @@ class ProductServiceImpl implements ProductService{
     return ListingPageResponseDto(category: cat, products: products);
   }
 
+  @override
+  Future<ProductsDto?> getProductDetail(String? id) async {
+    if (id == null || id.isEmpty) {
+      return null;
+    }
+    return productRepository.findById(id);
+  }
+
 }

@@ -103,7 +103,7 @@ class AppRouter {
             path: "${ProductDetailPage.routeName}/:id",
             builder: (context, state) {
               return ProductDetailPage(
-                  productName: state.pathParameters["id"]);
+                  id: state.pathParameters["id"]);
             })
       ], errorBuilder: (context, state) => const ErrorPage());
 
