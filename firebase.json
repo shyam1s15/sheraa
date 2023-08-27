@@ -1,5 +1,6 @@
 {
-  "hosting": {
+  "hosting": [{
+    "site": "sheraa",
     "public": "build/web",
     "ignore": [
       "firebase.json",
@@ -12,5 +13,16 @@
         "destination": "/#/"
       }
     ]
+  },{
+    "site": "site2",
+    "public": "site2-public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
+  ]
 }
