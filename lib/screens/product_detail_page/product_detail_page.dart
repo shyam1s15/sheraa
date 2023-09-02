@@ -2,41 +2,41 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sheraa/blocs/product_detail/product_detail_bloc.dart';
+import 'package:sheraa/bloc/app_bloc.dart';
 
 class ProductDetailPage extends StatelessWidget {
-  ProductDetailPage({super.key, required this.id});
-  final String? id;
+  ProductDetailPage({super.key, this.productSlug});
+  final String? productSlug;
 
   static const String routeName = '/product/detail';
 
-  static Route route(String? id) {
+  static Route route(String? productSlug) {
     return MaterialPageRoute(
         settings: const RouteSettings(name: routeName),
-        builder: (_) => ProductDetailPage(id: id));
+        builder: (_) => ProductDetailPage(productSlug: productSlug));
   }
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<ProductDetailBloc>(context);
+    final bloc = BlocProvider.of<AppBloc>(context);
 
     // Fire the event with the data
-    bloc.add(LoadProductDetailEvent(id ?? "0"));
+    bloc.add(LoadProductDetailPageEvent(productSlug ?? ""));
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flutter Scaffold with Bottom Bar'),
       ),
-      body: BlocBuilder<ProductDetailBloc, ProductDetailState>(
+      body: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
-          if (state is ProductDetailLoaded) {
+        if (state is ProductDetailLoadedState) {
             return Stack(
               children: [
                 Expanded(
                   child: ListView(
                     children: [
                       // Image Carousel covering 60% of the screen
-                      state.data.images != null  && state.data.images!.isNotEmpty
+                      state.product.images != null  && state.product.images!.isNotEmpty
                       ? Container(
                         height: MediaQuery.of(context).size.height * 0.6,
                         child: CarouselSlider(
@@ -47,8 +47,8 @@ class ProductDetailPage extends StatelessWidget {
                             autoPlayInterval: const Duration(seconds: 3),
                           ),
                           items: [
-                            ListView.builder(itemCount: state.data.images!.length ,itemBuilder: (context, index)  {
-                            return Image.network(state.data.images![index]);
+                            ListView.builder(itemCount: state.product.images!.length ,itemBuilder: (context, index)  {
+                            return Image.network(state.product.images![index]);
                           })],
 
                         ),
@@ -84,13 +84,13 @@ class ProductDetailPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                state.data.name,
+                                state.product.name ?? "",
                                 style: const TextStyle(
                                     fontSize: 24, fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(height: 8),
-                              state.data.about != null ? Text(
-                                state.data.about!,
+                              state.product.description != null ? Text(
+                                state.product.description!,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
@@ -98,8 +98,8 @@ class ProductDetailPage extends StatelessWidget {
                               ) : Container(),
 
                               const SizedBox(height: 8),
-                              state.data.moreInfo != null ? Text(
-                                state.data.moreInfo!,
+                              state.product.summary != null ? Text(
+                                state.product.summary!,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
@@ -113,12 +113,12 @@ class ProductDetailPage extends StatelessWidget {
                               // ],),
                               const SizedBox(height: 16),
                               Text(
-                                state.data.price.toString() + " RS",
+                                state.product.price.toString() + " RS",
                                 style: const TextStyle(fontSize: 20),
                               ),
                               SizedBox(height: 8),
                               Text(
-                                state.data.discount.toString() + " RS OFF",
+                                state.product.offerText.toString(),
                                 style: const TextStyle(fontSize: 20),
                               ),
                             ],
@@ -164,7 +164,7 @@ class ProductDetailPage extends StatelessWidget {
                 )
               ],
             );
-          } else if (state is ProductDetailLoading) {
+          } else if (state is AppLoadingState) {
             return const Scaffold(
                 backgroundColor: Colors.white,
                 body: Center(
