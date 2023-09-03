@@ -25,107 +25,78 @@ class ProductDetailPage extends StatelessWidget {
     bloc.add(LoadProductDetailPageEvent(productSlug ?? ""));
 
     return AppLayout(
-      
       child: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
-        if (state is ProductDetailLoadedState) {
+          if (state is ProductDetailLoadedState) {
             return Stack(
               children: [
-                Expanded(
-                  child: ListView(
-                    children: [
-                      // Image Carousel covering 60% of the screen
-                      state.product.images != null  && state.product.images!.isNotEmpty
-                      ? Container(
-                        height: MediaQuery.of(context).size.height * 0.6,
-                        child: CarouselSlider(
-                          options: CarouselOptions(
-                            aspectRatio: 16 / 9,
-                            autoPlay: true,
-                            enlargeCenterPage: true,
-                            autoPlayInterval: const Duration(seconds: 3),
+                ListView(
+                  children: [
+                    // Image Carousel covering 60% of the screen
+                    state.product.images != null &&
+                            state.product.images!.isNotEmpty
+                        ? Container(
+                            height: MediaQuery.of(context).size.height * 0.6,
+                            child: CarouselSlider(
+                              options: CarouselOptions(
+                                aspectRatio: 16 / 9,
+                                autoPlay: true,
+                                enlargeCenterPage: true,
+                                autoPlayInterval: const Duration(seconds: 3),
+                              ),
+                              items: state.product.images!.map((image) {
+                                return Image.network(image);
+                              }).toList(),
+                            ),
+                          )
+                        : Container(),
+                    // Other product details below the carousel
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            state.product.name ?? "",
+                            style: const TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
                           ),
-                          items: [
-                            ListView.builder(itemCount: state.product.images!.length ,itemBuilder: (context, index)  {
-                            return Image.network(state.product.images![index]);
-                          })],
-
-                        ),
-                      ) :
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.6,
-                        child: CarouselSlider(
-                          options: CarouselOptions(
-                            aspectRatio: 16 / 9,
-                            autoPlay: true,
-                            enlargeCenterPage: true,
-                            autoPlayInterval: const Duration(seconds: 3),
+                          const SizedBox(height: 8),
+                          state.product.description != null
+                              ? Text(
+                                  state.product.description!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w200),
+                                )
+                              : Container(),
+                          const SizedBox(height: 8),
+                          state.product.summary != null
+                              ? Text(
+                                  state.product.summary!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w200),
+                                )
+                              : Container(),
+                          const SizedBox(height: 16),
+                          Text(
+                            state.product.price.toString() + " RS",
+                            style: const TextStyle(fontSize: 20),
                           ),
-                          items: [
-                            // Add your image widgets here
-                            Image.network('https://example.com/image1.jpg',
-                                fit: BoxFit.cover),
-                            Image.network('https://example.com/image2.jpg',
-                                fit: BoxFit.cover),
-                            Image.network('https://example.com/image3.jpg',
-                                fit: BoxFit.cover),
-                          ],
-
-                          // items: ListView.builder(itemCount: state.data.images ,itemBuilder: (context, index)),
-
-                        ),
+                          SizedBox(height: 8),
+                          Text(
+                            state.product.offerText.toString(),
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ],
                       ),
-                      // Other product details below the carousel
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                state.product.name ?? "",
-                                style: const TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(height: 8),
-                              state.product.description != null ? Text(
-                                state.product.description!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w200),
-                              ) : Container(),
-
-                              const SizedBox(height: 8),
-                              state.product.summary != null ? Text(
-                                state.product.summary!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w200),
-                              ) : Container(),
-                              // Column(children: [
-                              //   // state.data.about != null ?
-                              //   // Html(data: state.data.about) : Container(),
-                              //   // state.data.moreInfo != null ?
-                              //   // Html(data: state.data.moreInfo) : Container(),
-                              // ],),
-                              const SizedBox(height: 16),
-                              Text(
-                                state.product.price.toString() + " RS",
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              SizedBox(height: 8),
-                              Text(
-                                state.product.offerText.toString(),
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 Positioned(
                   left: 0,
