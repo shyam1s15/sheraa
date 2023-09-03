@@ -12,6 +12,7 @@ class AppLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, 
         backgroundColor: APP_BACKGROUND_COLOR,
         elevation: 2,
         title: Row(

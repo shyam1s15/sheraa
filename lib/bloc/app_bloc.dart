@@ -20,7 +20,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       // TODO: implement event handler
     });
   
-    on<InitialAppEvent> (_loadHomePageData);
+    // on<InitialAppEvent> (_loadHomePageData);
+    on<LoadAppHomePageEvent> (_loadHomePageData);
     on<LoadAppCategoriePageEvent> (_loadAppCategoriesInfo);
     on<LoadProductListingPageEvent>(_loadProductListingPage);   
     on<LoadProductDetailPageEvent>(_loadProductPageDetail);
@@ -30,7 +31,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
 
-  FutureOr<void> _loadHomePageData(InitialAppEvent event, Emitter<AppState> emit) async {
+  FutureOr<void> _loadHomePageData(LoadAppHomePageEvent event, Emitter<AppState> emit) async {
     CategoriesApi categoriesApi = CategoriesApi();
     ObtainedResponse catResp = await categoriesApi.getCategoriesDetailList();
     if (catResp.result == API_RESULT.FAILED) {

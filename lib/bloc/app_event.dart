@@ -11,7 +11,7 @@ class InitialAppEvent extends AppEvent {
 
 }
 
-//class LoadAppHomePageEvent extends AppEvent {}
+class LoadAppHomePageEvent extends AppEvent {}
 
 class LoadAppCategoriePageEvent extends AppEvent {}
 

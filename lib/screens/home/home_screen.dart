@@ -33,12 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    print("Home page loaded");
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of<AppBloc>(context);
+    bloc.add(LoadAppHomePageEvent());
+
     return AppLayout(child: SafeArea(
         child: BlocBuilder<AppBloc, AppState>(builder: (context, state) {
       if (state is HomePageLoadedState) {
@@ -84,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ProductListingPage.routeName,
                                       queryParameters: {
                                         "category": state.trendingProductList[index]
-                                            .productSlug
+                                            .categoryName!
                                       });
                                 }
                               },

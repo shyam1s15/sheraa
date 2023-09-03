@@ -40,6 +40,9 @@ class ProductListingPage extends StatelessWidget {
         child: BlocBuilder<AppBloc, AppState>(
           builder: (context, state) {
             if (state is ProductListingPageLoaded) {
+              state.productList.forEach((element) {
+                print(element.productSlug);
+              });
               return Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,70 +51,54 @@ class ProductListingPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      BlocBuilder<AppBloc, AppState>(
-                        builder: (context, state) {
-                          if (state is HomePageLoadedState) {
-                            return Expanded(
-                              child: SizedBox(
-                                height: 110,
-                                child: ListView.separated(
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return InkWell(
-                                        child: CategoryWidget(
-                                            imageUrl:
-                                                state.categories[index].icon,
-                                            name:
-                                                state.categories[index].name ??
-                                                    ""),
-                                        onTap: () {
-                                          if (state.categories[index].id ==
-                                              "0") {
-                                            // load all category subcategory page aka menu
-                                            // Navigator.pushNamed(
-                                            //     context, CatSubcatScreen.routeName,
-                                            //     arguments: state.categoryResponse);
-                                            // context.push(CatSubcatScreen.routeName, extra: state.categoryResponse, );
-                                            // Routemaster.of(context).push(CatSubcatScreen.routeName);
-                                          } else {
-                                            // load specific category page
-                                            // Navigator.pushNamed(
-                                            //     context, ProductListingPage.routeName,
-                                            //     arguments: CustomConverter
-                                            //         .convert_cat_subcat_to_dto(
-                                            //             state.categoryResponse
-                                            //                 .categories[index].id,
-                                            //             null));
-                                            // context.push(ProductListingPage.routeName,
-                                            //     extra: CustomConverter.convert_cat_subcat_to_dto(state.categoryResponse.categories[index].id, null));
-                                            Routemaster.of(context).push(
-                                                ProductListingPage.routeName,
-                                                queryParameters: {
-                                                  "": state
-                                                      .trendingProductList[
-                                                          index]
-                                                      .productSlug
-                                                });
-                                          }
-                                        },
-                                      );
-                                      // return Container();
-                                    },
-                                    separatorBuilder:
-                                        (BuildContext context, int index) =>
-                                            const Divider(),
-                                    itemCount: state.categories.length),
-                              ),
-                            );
-                          } else {
-                            return Container();
-                          }
-                        },
-                      ),
+                      Expanded(
+                        child: SizedBox(
+                          height: 110,
+                          child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (BuildContext context, int index) {
+                                return InkWell(
+                                  child: CategoryWidget(
+                                      imageUrl: state.categories[index].icon,
+                                      name: state.categories[index].name ?? ""),
+                                  onTap: () {
+                                    if (state.categories[index].id == "0") {
+                                      // load all category subcategory page aka menu
+                                      // Navigator.pushNamed(
+                                      //     context, CatSubcatScreen.routeName,
+                                      //     arguments: state.categoryResponse);
+                                      // context.push(CatSubcatScreen.routeName, extra: state.categoryResponse, );
+                                      // Routemaster.of(context).push(CatSubcatScreen.routeName);
+                                    } else {
+                                      // load specific category page
+                                      // Navigator.pushNamed(
+                                      //     context, ProductListingPage.routeName,
+                                      //     arguments: CustomConverter
+                                      //         .convert_cat_subcat_to_dto(
+                                      //             state.categoryResponse
+                                      //                 .categories[index].id,
+                                      //             null));
+                                      // context.push(ProductListingPage.routeName,
+                                      //     extra: CustomConverter.convert_cat_subcat_to_dto(state.categoryResponse.categories[index].id, null));
+                                      Routemaster.of(context).push(
+                                          ProductListingPage.routeName,
+                                          queryParameters: {
+                                            "": state
+                                                .productList[index].productSlug
+                                          });
+                                    }
+                                  },
+                                );
+                                // return Container();
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) =>
+                                      const Divider(),
+                              itemCount: state.categories.length),
+                        ),
+                      )
                     ],
                   ),
-                  
                   state.productList.isNotEmpty
                       ? Expanded(
                           child: GridView.builder(
@@ -124,6 +111,7 @@ class ProductListingPage extends StatelessWidget {
                             ),
                             itemCount: state.productList
                                 .length, // Number of items in the grid
+
                             itemBuilder: (context, index) {
                               return InkWell(
                                 //onTap: () => Navigator.pushNamed(context, ProductDetailPage.routeName, arguments: {'id': state.productResponseDto.products![index].id}),
@@ -134,13 +122,15 @@ class ProductListingPage extends StatelessWidget {
                                       "name":
                                           state.productList[index].productSlug
                                     }),
-                                child: ProductCard(
+                                /*child: ProductCard(
                                   name: state.productList[index].name ?? "",
                                   imageUrl:
                                       state.productList[index].images!.first,
                                   price: state.productList[index].price ?? 0,
                                   discountAmount: 0,
-                                ),
+                                ),*/
+                                child: ProductCard(
+                                    product: state.productList[index]),
                               );
                             },
                           ),

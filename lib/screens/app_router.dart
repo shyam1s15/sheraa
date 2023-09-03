@@ -114,7 +114,7 @@ final routes = RouteMap(
   routes: {
     HomeScreen.routeName: (_) => MaterialPage(child: HomeScreen()),
     // CatSubcatScreen.routeName: (_) => MaterialPage(child: CatSubcatScreen()),
-    ProductListingPage.routeName: (route) => MaterialPage(child: ProductListingPage(category: route.queryParameters['category-slug'],)),
+    ProductListingPage.routeName: (route) => MaterialPage(child: ProductListingPage(category: route.queryParameters['category'],)),
     ProductDetailPage.routeName: (route) => MaterialPage(child: ProductDetailPage(productSlug: route.queryParameters['name'])),
   }
 );

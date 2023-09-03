@@ -139,7 +139,6 @@ class ProductCmsApi {
 
     if (response.statusCode == 200) {
       final responseJson = jsonDecode(utf8.decode(response.bodyBytes));
-      // print()
       if (responseJson['response']['error'] == 0) {
         for (int i = 0;
             i < responseJson['content'].length;
