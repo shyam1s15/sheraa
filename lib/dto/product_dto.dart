@@ -36,7 +36,7 @@ class ProductDto {
       summary: json['summary'],
       description: json['description'],
       offerText: json['offer_text'],
-      productSlug: json['product-slug']
+      productSlug: json['product_slug'] ?? ""
     );
   }
 
@@ -51,6 +51,7 @@ class ProductDto {
       'summary': summary,
       'description': description,
       'offer_text': offerText,
+      'product_slug': productSlug
     };
   }
 }

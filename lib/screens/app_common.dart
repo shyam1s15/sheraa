@@ -51,6 +51,7 @@ class AppLayout extends StatelessWidget {
             ),
           ],
         ),
-      ));
+      ), body: child);
+    
   }
 }

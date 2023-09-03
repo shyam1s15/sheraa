@@ -34,13 +34,30 @@ class AppLoadingState extends AppState {
 }
 
 class ProductListingPageLoaded extends AppState {
-  final CategoryDto category;
+  final List<CategoryDto> categories;
   final List<ProductDto> productList;
 
-  ProductListingPageLoaded(this.category, this.productList);
+  ProductListingPageLoaded(this.categories, this.productList);
 
   @override
-  List<Object> get props => [category, productList];
+  List<Object> get props => [categories, productList];
 }
 
-class CategoryListingBlocMenuLoaded extends AppState {}
+class CategoryListingBlocMenuLoaded extends AppState {
+  final List<CategoryDto> categories;
+
+  CategoryListingBlocMenuLoaded(this.categories);
+
+  @override
+  List<Object> get props => [categories]; 
+}
+
+class AppErrorState extends AppState {
+  final String appMessage;
+  
+
+  AppErrorState(this.appMessage);
+
+  @override
+  List<Object> get props => [appMessage];
+}
