@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:routemaster/routemaster.dart';
+import 'package:sheraa/screens/home/home_screen.dart';
 
 import '../resources/themes.dart';
 
@@ -18,17 +20,22 @@ class AppLayout extends StatelessWidget {
         title: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            CachedNetworkImage(
-                    imageUrl: "https://storage.googleapis.com/sheraa-95d17.appspot.com/sheraa_logo_darkj.jpeg", // Replace with your image URL
-                    width: 34,
-                    height: 34,
-                    placeholder: (context, url) => const SizedBox(
+            InkWell(
+              onTap: () => Routemaster.of(context).push(
+                                      HomeScreen.routeName,
+                                      ),
+              child: CachedNetworkImage(
+                      imageUrl: "https://storage.googleapis.com/sheraa-95d17.appspot.com/sheraa_logo_darkj.jpeg", // Replace with your image URL
                       width: 34,
                       height: 34,
+                      placeholder: (context, url) => const SizedBox(
+                        width: 34,
+                        height: 34,
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  ),
+            ),
             const SizedBox(
               width: 10,
             ),
