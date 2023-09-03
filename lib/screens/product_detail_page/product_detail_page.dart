@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sheraa/bloc/app_bloc.dart';
+import 'package:sheraa/screens/app_common.dart';
 
 class ProductDetailPage extends StatelessWidget {
   ProductDetailPage({super.key, this.productSlug});
@@ -10,24 +11,22 @@ class ProductDetailPage extends StatelessWidget {
 
   static const String routeName = '/product/detail';
 
-  static Route route(String? productSlug) {
-    return MaterialPageRoute(
-        settings: const RouteSettings(name: routeName),
-        builder: (_) => ProductDetailPage(productSlug: productSlug));
-  }
+  // static Route route(String? productSlug) {
+  //   return MaterialPageRoute(
+  //       settings: const RouteSettings(name: routeName),
+  //       builder: (_) => ProductDetailPage(productSlug: productSlug));
+  // }
 
   @override
   Widget build(BuildContext context) {
+    print(productSlug);
     final bloc = BlocProvider.of<AppBloc>(context);
-
     // Fire the event with the data
     bloc.add(LoadProductDetailPageEvent(productSlug ?? ""));
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter Scaffold with Bottom Bar'),
-      ),
-      body: BlocBuilder<AppBloc, AppState>(
+    return AppLayout(
+      
+      child: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
         if (state is ProductDetailLoadedState) {
             return Stack(
@@ -188,7 +187,9 @@ class ProductDetailPage extends StatelessWidget {
                   ),
                 ));
           } else {
-            return Container();
+            return Container(
+              child: Text(state.toString()),
+            );
           }
         },
       ),

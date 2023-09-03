@@ -16,7 +16,7 @@ import '../product_detail_page/product_detail_page.dart';
 import '../product_listing/product_card.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const String routeName = '/';
+  static const String routeName = '/trending';
 
   static Route route() {
     return MaterialPageRoute(

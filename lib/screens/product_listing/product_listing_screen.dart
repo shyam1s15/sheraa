@@ -83,7 +83,7 @@ class ProductListingPage extends StatelessWidget {
                                       Routemaster.of(context).push(
                                           ProductListingPage.routeName,
                                           queryParameters: {
-                                            "": state
+                                            "name": state
                                                 .productList[index].productSlug
                                           });
                                     }
