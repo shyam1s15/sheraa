@@ -4,7 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:sheraa/api/base_api.dart';
+import 'package:sheraa/api/obtained_response.dart';
+import 'package:sheraa/api/order_api.dart';
 import 'package:sheraa/bloc/app_bloc.dart';
+import 'package:sheraa/dto/product_dto.dart';
 import 'package:sheraa/screens/app_common.dart';
 import 'package:sheraa/screens/home/home_screen.dart';
 import 'package:sheraa/utils/utils.dart';
@@ -126,7 +130,7 @@ class ProductDetailPage extends StatelessWidget {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return MyPopupDialog();
+                                  return MyPopupDialog(productDto: state.product,);
                                 },
                               );
                             },
@@ -189,6 +193,11 @@ class ProductDetailPage extends StatelessWidget {
 }
 
 class MyPopupDialog extends StatefulWidget {
+
+  final ProductDto productDto;
+
+  const MyPopupDialog({super.key, required this.productDto});
+
   @override
   _MyPopupDialogState createState() => _MyPopupDialogState();
 }
@@ -269,7 +278,7 @@ class _MyPopupDialogState extends State<MyPopupDialog> {
             child: Row(
               children: [
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // // Save button logic here
                     // String name = nameController.text;
                     // String address = addressController.text;
@@ -279,12 +288,16 @@ class _MyPopupDialogState extends State<MyPopupDialog> {
                         showNetworkImage = true;
                       });
 
-                      Future.delayed(Duration(seconds: 10), () {
-                        Navigator.of(context).pop();
-                        Routemaster.of(context).push(
-                          HomeScreen.routeName,
-                        );
-                      });
+                      OrderApi api = OrderApi();
+                      ObtainedResponse resp = await api.createOrder(widget.productDto, nameController.text, phoneController.text, addressController.text);
+                      if (resp.result == API_RESULT.SUCCESS) {
+                        Future.delayed(Duration(seconds: 10), () {
+                          Navigator.of(context).pop();
+                          Routemaster.of(context).push(
+                            HomeScreen.routeName,
+                          );
+                        });
+                      }
                     }
                     if (nameController.text.isEmpty) {
                       setState(() {
